@@ -57,13 +57,15 @@ function goToSlide(index) {
 
 // On crée un évènement au clic sur les flêches !
 arrowLeft.addEventListener("click", () => {
-  currentSlide = currentSlide > 0 ? currentSlide - 1 : slides.length - 1;
-  updateCarousel();
+  console.log("Flèche gauche cliquée");
+  const newIndex = currentSlide > 0 ? currentSlide - 1 : slides.length - 1;
+  goToSlide(newIndex);
 });
 
 arrowRight.addEventListener("click", () => {
-  currentSlide = currentSlide < slides.length - 1 ? currentSlide + 1 : 0;
-  updateCarousel();
+  console.log("Flèche droite cliquée");
+  const newIndex = currentSlide < slides.length - 1 ? currentSlide + 1 : 0;
+  goToSlide(newIndex);
 });
 
 // On initialise l'affichage de la première diapositive lorsque la page est chargée... puis on met à jour dynamiquement le carousel selon les évènements.

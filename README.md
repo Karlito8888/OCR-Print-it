@@ -1,6 +1,5 @@
 # Carousel Dynamique en Vanilla JavaScript
 
-
 ## Description
 
 Ce projet consiste en la création d'un carousel d'images intégré dynamiquement en utilisant uniquement JavaScript, HTML et CSS. Le carousel permet de naviguer entre plusieurs diapositives d'images avec des flèches de direction et des points de navigation.
@@ -18,6 +17,5 @@ Le projet se compose de trois fichiers principaux :
 - **index.html** : Contient la structure HTML du carousel.
 - **style.css** : Contient les styles CSS pour la mise en forme du carousel.
 - **script.js** : Contient le code JavaScript pour la logique du carousel.
-
 
 Ce projet a été réalisé dans le cadre de ma formation chez OpenClassRooms pour améliorer mes compétences en développement front-end.
