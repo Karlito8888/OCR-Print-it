@@ -19,8 +19,6 @@ const slides = [
   },
 ];
 
-// On initialise la diapo active à l'index 0
-let currentSlide = 0;
 
 // On vise et on stocke ces éléments du DOM
 const bannerImg = document.querySelector(".banner-img");
@@ -29,13 +27,17 @@ const dotsContainer = document.querySelector(".dots");
 const arrowLeft = document.querySelector(".arrow_left");
 const arrowRight = document.querySelector(".arrow_right");
 
+// On initialise la diapo active à l'index 0
+let currentSlide = 0;
+const dots = [];
+
 // On initialise les dots et les synchronise aux slides
 slides.forEach((slide, index) => {
   const dot = document.createElement("div");
   dot.className = "dot" + (index === 0 ? " dot_selected" : "");
-  // if (index === 0) dot.classList.add("dot_selected");
   dot.addEventListener("click", () => goToSlide(index));
   dotsContainer.appendChild(dot);
+  dots.push(dot);
 });
 
 // On met à jour dynamiquement la src de l'img, ainsi que le TagLine en fonction du 'currentSlide'.
@@ -44,7 +46,6 @@ function updateCarousel() {
   bannerTagLine.innerHTML = slides[currentSlide].tagLine;
 
   // On active ou désactive les dots selon le 'currentSlide'.
-  const dots = document.querySelectorAll(".dot");
   dots.forEach((dot, index) =>
     dot.classList.toggle("dot_selected", index === currentSlide)
   );
@@ -52,19 +53,13 @@ function updateCarousel() {
 
 // On met à jour l'index de currentSlide et appelle updateCarousel pour mettre à jour l'affichage.
 function goToSlide(index) {
-  currentSlide = index;
+  currentSlide = (index + slides.length) % slides.length; // Gérer les débordements
   updateCarousel();
 }
 
-// Fonction générique pour changer de slide avec les flèches
-function changeSlide(offset) {
-  currentSlide = (currentSlide + offset + slides.length) % slides.length;
-  updateCarousel();
-}
-
-// Événements pour les flèches
-arrowLeft.addEventListener("click", () => changeSlide(-1));
-arrowRight.addEventListener("click", () => changeSlide(1));
+// Utiliser goToSlide pour les flèches
+arrowLeft.addEventListener("click", () => goToSlide(currentSlide - 1));
+arrowRight.addEventListener("click", () => goToSlide(currentSlide + 1));
 
 // Initialisation du carousel
 updateCarousel();
