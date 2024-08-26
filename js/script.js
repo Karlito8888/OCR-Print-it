@@ -32,8 +32,8 @@ const arrowRight = document.querySelector(".arrow_right");
 // On initialise les dots et les synchronise aux slides
 slides.forEach((slide, index) => {
   const dot = document.createElement("div");
-  dot.classList.add("dot");
-  if (index === 0) dot.classList.add("dot_selected");
+  dot.className = "dot" + (index === 0 ? " dot_selected" : "");
+  // if (index === 0) dot.classList.add("dot_selected");
   dot.addEventListener("click", () => goToSlide(index));
   dotsContainer.appendChild(dot);
 });
@@ -44,9 +44,10 @@ function updateCarousel() {
   bannerTagLine.innerHTML = slides[currentSlide].tagLine;
 
   // On active ou désactive les dots selon le 'currentSlide'.
-  document.querySelectorAll(".dot").forEach((dot, index) => {
-    dot.classList.toggle("dot_selected", index === currentSlide);
-  });
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach((dot, index) =>
+    dot.classList.toggle("dot_selected", index === currentSlide)
+  );
 }
 
 // On met à jour l'index de currentSlide et appelle updateCarousel pour mettre à jour l'affichage.
@@ -55,18 +56,15 @@ function goToSlide(index) {
   updateCarousel();
 }
 
-// On crée un évènement au clic sur les flêches !
-arrowLeft.addEventListener("click", () => {
-  console.log("Flèche gauche cliquée");
-  const newIndex = currentSlide > 0 ? currentSlide - 1 : slides.length - 1;
-  goToSlide(newIndex);
-});
+// Fonction générique pour changer de slide avec les flèches
+function changeSlide(offset) {
+  currentSlide = (currentSlide + offset + slides.length) % slides.length;
+  updateCarousel();
+}
 
-arrowRight.addEventListener("click", () => {
-  console.log("Flèche droite cliquée");
-  const newIndex = currentSlide < slides.length - 1 ? currentSlide + 1 : 0;
-  goToSlide(newIndex);
-});
+// Événements pour les flèches
+arrowLeft.addEventListener("click", () => changeSlide(-1));
+arrowRight.addEventListener("click", () => changeSlide(1));
 
-// On initialise l'affichage de la première diapositive lorsque la page est chargée... puis on met à jour dynamiquement le carousel selon les évènements.
+// Initialisation du carousel
 updateCarousel();
